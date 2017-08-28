@@ -1,17 +1,18 @@
 # PCH文件的设置创建
 
- 
 ---
+
 ```objc
 Update更新：2016年5月9日 By {MISSAJJ琴瑟静听}
 ```
 
-##什么是PCH文件？
-PCH文件是预编译头文件(一般扩展名为.PCH)，是把一个工程中较稳定的代码预先编译好放在一个文件(.PCH)里。这些预先编译好的代码可以是任何的C/C++代码--甚至可以是inline函数,一般是整个工程中是较为稳定的,不会经常被修改的代码，可以用来存储共享信息，比如设备屏幕的宽度，高度，版本号等公用信息
+## 什么是PCH文件？
+
+PCH文件是预编译头文件\(一般扩展名为.PCH\)，是把一个工程中较稳定的代码预先编译好放在一个文件\(.PCH\)里。这些预先编译好的代码可以是任何的C/C++代码--甚至可以是inline函数,一般是整个工程中是较为稳定的,不会经常被修改的代码，可以用来存储共享信息，比如设备屏幕的宽度，高度，版本号等公用信息
 
 Xcode老版本会自动为我们创建PCH文件，但自Xcode6之后创建项目的时候不会自动创建了，所以需要自己手动创建
 
-##PCH文件的创建
+## PCH文件的创建
 
 1、如图添加一个PCH新文件，在IOS-》Other目录
 
@@ -19,16 +20,19 @@ Xcode老版本会自动为我们创建PCH文件，但自Xcode6之后创建项目
 
 2、设置PCH文件目录
 
-- 1、Build Setttings搜索prefix
-- 2、Precompile Prefix Header 选择为YES
-- 3、设置Prefix Header目录为 $(SRCROOT)/项目文件夹/PrefixHeader.pch
+* 1、Build Setttings搜索prefix
+* 2、Precompile Prefix Header 选择为YES
+* 3、设置Prefix Header目录为 $\(SRCROOT\)/项目文件夹/PrefixHeader.pch
 
- 如：$(SRCROOT)/MAButtonTool/PrefixHeader.pch
+  如：$\(SRCROOT\)/MAButtonTool/PrefixHeader.pch
 
 ![image](Images/设置PCH文件目录.png)
+
 ## PCH文件可能引发的错误
+
 ![image](Images/Snip20151105_8.png)
-- 解决方案
+
+* 解决方案
 
 ```objc
 #ifndef PrefixHeader_pch
@@ -49,16 +53,19 @@ Xcode老版本会自动为我们创建PCH文件，但自Xcode6之后创建项目
 ```
 
 ## 在Build Setting中配置宏
-- 如果项目中有些宏找不到, 可能是配置在Build Setting中
-![image](Images/Snip20151105_9.png)
 
-- 注意点:宏的名字不能全部是小写字母
+* 如果项目中有些宏找不到, 可能是配置在Build Setting中  
+  ![image](Images/Snip20151105_9.png)
 
-- 如果宏的名字全部是小写, 会出现以下错误
-![image](Images/Snip20151105_10.png)
-## 常用PCH文件内的宏定义
+* 注意点:宏的名字不能全部是小写字母
+
+* 如果宏的名字全部是小写, 会出现以下错误  
+  ![image](Images/Snip20151105_10.png)
+
+  ## 常用PCH文件内的宏定义
 
 请参考这份MISSAJJ整理的PCH文件
+
 ```objc
 //
 //  PrefixHeader.pch
@@ -107,10 +114,10 @@ Xcode老版本会自动为我们创建PCH文件，但自Xcode6之后创建项目
  *   
  代码意思：用宏指令做一个判断，如果DEBUG为真，则编译#ifdef到#endif宏定义，否则编译器就不编译
  NSLog的输出还是比较消耗系统资源的，而且输出的数据也可能会暴露出App里的保密数据，所以发布正式版时需要把这些输出全部屏蔽掉。
- 
+
 优雅的解决方法，就是在项目的prefix.pch文件里加入下面一段代码，加入后，NSLog就只在Debug下有输出，Release下不输出了。
- 
- 
+
+
  在 "Target > Build Settings > Preprocessor Macros > Debug" 里有一个"DEBUG=1"。
  设置为Debug模式下，Product-->Scheme-->SchemeEdit Scheme
  设置Build Configuration成Debug时，就可以打印nslog了。
@@ -127,7 +134,7 @@ Xcode老版本会自动为我们创建PCH文件，但自Xcode6之后创建项目
 #define debugMethod()
 #endif
 
- 
+
 #define NSLogFunc NSLog(@"%s",__func__);
 
 
@@ -295,6 +302,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 
 #endif
-
 ```
+
+
 
